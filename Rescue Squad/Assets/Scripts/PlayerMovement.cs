@@ -15,63 +15,89 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
+        x = Input.GetAxis("Horizontal"); 
+        if (x == 0 && y == 0)
+        {
+            moveStop();
+        }
         if (x < 0)
         {
             moveLeft();
+            x = 0;
         }
         if (x > 0)
         {
             moveRight();
+            x = 0;
         }
-        if (x == 0 && y==0)
-        {
-            moveStop();
-        }
+        
         if (y < 0)
         {
             moveDown();
+            x = 0;
         }
         if (y > 0)
         {
             moveUp();
+            x = 0;
         }
 	}
     void moveRight()
     {
-        body.velocity = new Vector2(speed, 0);
+        anim.SetBool("Run", true);
         anim.SetBool("Perfil", true);
+        body.velocity = new Vector2(speed, 0);
         anim.SetBool("Down", false);
         anim.SetBool("Up", false);
         anim.SetBool("Left", false);
-        anim.SetBool("Run",true);
+        anim.SetBool("RunLeft", false);
+        anim.SetBool("RunBack", false);
+        anim.SetBool("RunFront", false);
+        
     }
     void moveLeft()
     {
-        body.velocity = new Vector2(-speed, 0);
+        anim.SetBool("RunLeft", true);
         anim.SetBool("Left", true);
+        body.velocity = new Vector2(-speed, 0);
         anim.SetBool("Down", false);
         anim.SetBool("Up", false);
         anim.SetBool("Perfil", false);
+        anim.SetBool("Run", false);
+        anim.SetBool("RunBack", false);
+        anim.SetBool("RunFront", false);
+        
     }
     void moveUp()
     {
         body.velocity = new Vector2(0,speed);
         anim.SetBool("Perfil", false);
         anim.SetBool("Down", false);
-        anim.SetBool("Up", true);
         anim.SetBool("Left", false);
+        anim.SetBool("RunFront", false);
+        anim.SetBool("Run", false);
+        anim.SetBool("RunLeft", false);
+        anim.SetBool("RunBack", true);
+        anim.SetBool("Up", true);
     }
     void moveDown()
     {
         body.velocity = new Vector2( 0,-speed);
         anim.SetBool("Perfil", false);
-        anim.SetBool("Down", true);
         anim.SetBool("Up", false);
         anim.SetBool("Left", false);
+        anim.SetBool("Run", false);
+        anim.SetBool("RunLeft", false);
+        anim.SetBool("RunBack", false);
+        anim.SetBool("RunFront", true);
+        anim.SetBool("Down", true);
     }
     void moveStop()
     {
         body.velocity = Vector2.zero;
-        anim.SetBool("Run",false);
+        anim.SetBool("Run", false);
+        anim.SetBool("RunLeft", false);
+        anim.SetBool("RunBack", false);
+        anim.SetBool("RunFront", false);
     }
 }
